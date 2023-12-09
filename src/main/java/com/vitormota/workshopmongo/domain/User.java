@@ -1,5 +1,7 @@
 package com.vitormota.workshopmongo.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,11 +11,12 @@ import java.util.Optional;
 
 @Document(collection = "user")
 public class User implements Serializable {
+
     @Id
     private String id;
     private String name;
     private String email;
-    
+
 
     public User(String id, String name, String email) {
         this.id = id;

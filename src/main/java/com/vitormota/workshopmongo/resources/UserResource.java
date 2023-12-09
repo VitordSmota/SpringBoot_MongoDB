@@ -1,5 +1,7 @@
 package com.vitormota.workshopmongo.resources;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vitormota.workshopmongo.domain.User;
 import com.vitormota.workshopmongo.dto.UserDTO;
 import com.vitormota.workshopmongo.services.UserService;
@@ -7,7 +9,9 @@ import com.vitormota.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,5 +31,11 @@ public class UserResource {
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
         Optional<User> user = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(user.get()));
+    }
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody User body){
+        User user = service.insert(body);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
