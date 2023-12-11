@@ -1,5 +1,6 @@
 package com.vitormota.workshopmongo.resources;
 
+import com.vitormota.workshopmongo.domain.Post;
 import com.vitormota.workshopmongo.domain.User;
 import com.vitormota.workshopmongo.dto.UserDTO;
 import com.vitormota.workshopmongo.services.UserService;
@@ -46,5 +47,12 @@ public class UserResource {
        body = service.update(body);
        return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+       User obj = service.findById(id).orElseThrow(()-> new RuntimeException("Não encontrado"));
+        return ResponseEntity.ok().body(obj.getPosts());
+    }
+
 
 }

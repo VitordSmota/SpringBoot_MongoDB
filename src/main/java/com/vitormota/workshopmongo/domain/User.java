@@ -50,6 +50,10 @@ public class User implements Serializable {
         return Objects.equals(id, user.id);
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
