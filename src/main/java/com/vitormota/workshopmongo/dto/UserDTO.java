@@ -1,7 +1,5 @@
 package com.vitormota.workshopmongo.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vitormota.workshopmongo.domain.User;
 
 import java.io.Serializable;

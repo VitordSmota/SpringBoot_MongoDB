@@ -1,11 +1,9 @@
 package com.vitormota.workshopmongo.services;
 
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vitormota.workshopmongo.domain.User;
 import com.vitormota.workshopmongo.dto.UserDTO;
 import com.vitormota.workshopmongo.repository.UserRepository;
+import com.vitormota.workshopmongo.resources.exception.StandardError;
 import com.vitormota.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +30,16 @@ public class UserService {
     public void delete(String id){
         repository.deleteById(id);
     }
+    public User update(User obj){
+        User newObj = repository.findById(obj.getId()).orElseThrow(() -> new ObjectNotFoundException("Não encontrado" + obj));
+        updateData(newObj,obj);
+        return repository.save(newObj);
+    }
+
+    public void updateData(User newObj, User obj) {
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+    }
+
 
 }

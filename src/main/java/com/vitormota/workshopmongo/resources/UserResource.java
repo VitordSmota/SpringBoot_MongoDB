@@ -1,11 +1,8 @@
 package com.vitormota.workshopmongo.resources;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vitormota.workshopmongo.domain.User;
 import com.vitormota.workshopmongo.dto.UserDTO;
 import com.vitormota.workshopmongo.services.UserService;
-import com.vitormota.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +39,12 @@ public class UserResource {
     public ResponseEntity<Void> delete(@PathVariable String id){
          service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> insert(@RequestBody User body,@PathVariable String id){
+       body.setId(id);
+       body = service.update(body);
+       return ResponseEntity.noContent().build();
     }
 
 }
